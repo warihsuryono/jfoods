@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (
+	id SERIAL PRIMARY KEY,
+	nama VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	token VARCHAR(100) NOT NULL,
+	created_at timestamp NOT NULL
+);
+
+DROP TABLE IF EXISTS sellers;
+CREATE TABLE sellers (
+	id SERIAL PRIMARY KEY,
+	nama VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	phoneNumber VARCHAR(100) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+	province VARCHAR(100) NOT NULL,
+	created_at timestamp NOT NULL
+);
