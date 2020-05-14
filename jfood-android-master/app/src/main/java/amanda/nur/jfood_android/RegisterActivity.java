@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                         catch (JSONException e)
                         {
-                            Toast.makeText(RegisterActivity.this,"Register Failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,"Register Failed : Email already exist", Toast.LENGTH_LONG).show();
                         }
                     }
                 };

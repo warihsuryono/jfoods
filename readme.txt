@@ -1,3 +1,19 @@
+#2020-05-15###################################################################################################################
+Tugas 2: Ubah LoginActivity&MainActivity (point a,b,c,d,e DONE!)
+semua sudah menggunakan postgre
+file baru:
+	JFood-master/src/main/java/AmandaNurOktaviani/JFood/DatabaseFoodPostgre.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/BuatPesananActivity.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/FoodRequest.java
+	jfood-android-master/app/src/main/res/layout/activity_buat_pesanan.xml
+
+execute jfood.sql lagi karena ada perubahan struktur database
+
+next: tugas 1: d,e,f,g,h,i,j & tugas 2f
+
+tolong bantu kerjakan Tugas 3f (layout invoice)
+
+#2020-05-14###################################################################################################################
 sudah bisa insert seller dan customer di postgre
 setting koneksi postgree ada di JFood-master\src\main\java\AmandaNurOktaviani\JFood\DatabaseConnectionPostgre.java (baris:11), 
 	sesuaikan dengan konfigurasi postgree di laptop kamu

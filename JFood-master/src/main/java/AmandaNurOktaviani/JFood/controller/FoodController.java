@@ -13,7 +13,7 @@ public class FoodController {
     public ArrayList<Food> getAllFood()
     {
         ArrayList<Food> foods = new ArrayList<>();
-        foods = DatabaseFood.getFoodDatabase();
+        foods = DatabaseFoodPostgre.getFoodDatabase();
         return foods;
     }
 
@@ -21,7 +21,7 @@ public class FoodController {
     public Food getFoodById(@PathVariable int id) {
         Food foods = null;
         try {
-            foods = DatabaseFood.getFoodById(id);
+            foods = DatabaseFoodPostgre.getFoodById(id);
         } catch (FoodNotFoundException e) {
             e.getMessage();
             return null;
@@ -32,14 +32,14 @@ public class FoodController {
     @RequestMapping(value = "/seller/{sellerId}", method = RequestMethod.GET)
     public ArrayList<Food> getFoodBySeller(@PathVariable int sellerId) {
         ArrayList<Food> foods = new ArrayList<>();
-        foods = DatabaseFood.getFoodBySeller(sellerId);
+        foods = DatabaseFoodPostgre.getFoodBySeller(sellerId);
         return foods;
     }
 
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     public ArrayList<Food> getFoodByCategory(@PathVariable FoodCategory category) {
         ArrayList<Food> foods = new ArrayList<>();
-        foods = DatabaseFood.getFoodByCategory(category);
+        foods = DatabaseFoodPostgre.getFoodByCategory(category);
         return foods;
     }
 
@@ -52,8 +52,8 @@ public class FoodController {
         Food food = null;
         try
         {
-            food = new Food(DatabaseFood.getLastId()+1,name,DatabaseSeller.getSellerById(sellerId),price,category);
-            DatabaseFood.addFood(food);
+            food = new Food(DatabaseFoodPostgre.getLastId()+1,name,DatabaseSeller.getSellerById(sellerId),price,category);
+            DatabaseFoodPostgre.addFood(food);
         }
         catch (SellerNotFoundException e)
         {

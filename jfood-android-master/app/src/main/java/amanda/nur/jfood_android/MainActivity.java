@@ -3,7 +3,9 @@ package amanda.nur.jfood_android;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
+    int currentUserId;
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
     private HashMap<Seller, ArrayList<Food>> childMapping = new HashMap<>();
@@ -30,7 +33,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent= getIntent();
+        Bundle b = intent.getExtras();
+        if(b!=null) currentUserId = (int) b.get("customerId");
+
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                    Food selected = childMapping.get(listSeller.get(groupPosition)).get(childPosition);
+                    Intent intent = new Intent(MainActivity.this,BuatPesananActivity.class);
+                    intent.putExtra("customerId", currentUserId);
+                    intent.putExtra("foodId", selected.getId());
+                    startActivity(intent);
+                    return false;
+                }
+        });
 
         refreshList();
     }

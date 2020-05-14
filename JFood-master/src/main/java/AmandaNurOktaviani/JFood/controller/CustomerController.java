@@ -32,7 +32,8 @@ public class CustomerController {
         Customer customer = new Customer(DatabaseCustomerPostgre.getLastId()+1, name, email, password);
         try {
 //            DatabaseCustomer.addCustomer(customer);
-            DatabaseCustomerPostgre.insertCustomer(customer);
+            if(!DatabaseCustomerPostgre.insertCustomer(customer))
+                throw new EmailAlreadyExistsException(customer);
         } catch (EmailAlreadyExistsException e) {
             e.getMessage();
             return null;

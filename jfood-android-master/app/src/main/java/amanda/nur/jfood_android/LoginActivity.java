@@ -3,6 +3,7 @@ package amanda.nur.jfood_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +22,17 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
     public static String API_ADDR = "http://192.168.0.33:8080/";
+    public static int customerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        customerId = pref.getInt("customerId", 0);
+        if(customerId > 0){//session masih tersimpan
+            Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
+            mainIntent.putExtra("customerId", customerId);
+            startActivity(mainIntent);
+        }
         setContentView(R.layout.activity_login);
         final EditText etEmail = findViewById(R.id.etEmail);
         final EditText etPassword = findViewById(R.id.etPassword);
@@ -43,8 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             if( jsonObject != null){
                                 Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
-                                int customerId = jsonObject.getInt("id");
+                                customerId = jsonObject.getInt("id");
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putInt("customerId", customerId);
+                                editor.commit();
                                 Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
+                                mainIntent.putExtra("customerId", customerId);
                                 startActivity(mainIntent);
                             }
                         }

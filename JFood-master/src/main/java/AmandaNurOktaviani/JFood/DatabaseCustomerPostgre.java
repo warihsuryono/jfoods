@@ -56,7 +56,7 @@ public class DatabaseCustomerPostgre {
             String sql = "SELECT id FROM customers  WHERE email='"+ customer.getEmail() +"'";
             ResultSet customers = stmt.executeQuery(sql);
             if(!customers.next()) { //cek apakah email sudah ada di table customers, jika belum insert sellers
-                sql = "INSERT INTO customers (nama,email,password,token,created_at) VALUES ('" + customer.getName() + "','" + customer.getEmail() + "','" + customer.getPassword() + "','',CURRENT_TIMESTAMP);";
+                sql = "INSERT INTO customers (nama,email,password,created_at) VALUES ('" + customer.getName() + "','" + customer.getEmail() + "','" + customer.getPassword() + "',CURRENT_TIMESTAMP);";
                 PreparedStatement prest;
                 prest = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 prest.executeUpdate();
@@ -66,6 +66,7 @@ public class DatabaseCustomerPostgre {
                 }
             } else {
                 lastId = customers.getInt("id");
+                return false;
             }
         } catch (Exception e) { }
         return true;
