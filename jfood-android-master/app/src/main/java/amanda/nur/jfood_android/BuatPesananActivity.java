@@ -146,14 +146,14 @@ public class BuatPesananActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             if( jsonObject != null){
                                 JSONObject promo = jsonObject;
-                                Double promoDisc = promo.getDouble("discount");
+                                Toast.makeText(BuatPesananActivity.this,"Pesanan berhasil ditambahkan", Toast.LENGTH_LONG).show();
 
                             }
                         }
                         catch (JSONException e)
                         {
                             total_price.setText(String.valueOf(foodPrice));
-                            Toast.makeText(BuatPesananActivity.this,"Invalid promo code", Toast.LENGTH_LONG).show();
+                            Toast.makeText(BuatPesananActivity.this,"Pesanan Gagal", Toast.LENGTH_LONG).show();
                         }
                     }
                 };

@@ -202,10 +202,12 @@ public class DatabaseInvoicePostgre {
         return list;
     }
 
-    public static boolean addInvoice(Invoice invoice) throws OngoingInvoiceAlreadyExistsException
+    public static boolean addInvoice(Invoice invoice, String promoCode) throws OngoingInvoiceAlreadyExistsException
     {
         int customerId = invoice.getCustomer().getId();
         int invoice_id = 0;
+        int promocode = 0;
+        String sql = "";
         try {
             stmt = conn.createStatement();
             ResultSet invoices = stmt.executeQuery("SELECT invoice_id FROM invoices order by invoice_id DESC LIMIT 1");
@@ -215,13 +217,28 @@ public class DatabaseInvoicePostgre {
                 invoice_id = 1;
             }
 
+            invoices = stmt.executeQuery("SELECT invoice_id FROM invoices WHERE customer_id = '" + invoice.getCustomer().getId() + "' AND status='Ongoing' LIMIT 1");
+            if(invoices.next()) {//ambil invoice dari status yg masih ongoing
+                invoice_id = invoices.getInt("invoice_id");
+            }
+
             ArrayList<Food> foods = invoice.getFoods();
-            for (Food food:foods)
-            {
+            for (Food food:foods) {
                 int food_id = food.getId();
-                int price = 0;
-                int promocode = 0;
-                stmt.executeQuery("INSERT INTO invoices (invoice_id,customer_id,food_id,payment_type,price,promocode,total_price,status,created_at) VALUES ('" + invoice_id +"','" + customerId +"','" + food_id +"','" + invoice.getPaymentType().toString() +"','" + price +"','" + promocode +"','0','Ongoing',CURRENT_TIMESTAMP);");
+                int price = food.getPrice();
+                int total_price = price;
+                if (!promoCode.equals("")){
+                    promocode = Integer.parseInt(promoCode);
+                    Promo promo = DatabasePromoPostgre.getPromoByCode(promoCode);
+                    boolean active = promo.getActive();
+                    int minPrice = promo.getMinPrice();
+                    int discount = promo.getDiscount();
+                    if(active && minPrice <= price){
+                        total_price = price - discount;
+                    }
+                }
+                sql = "INSERT INTO invoices (invoice_id,customer_id,food_id,payment_type,price,promocode,total_price,status,created_at) VALUES ('" + invoice_id +"','" + customerId +"','" + food_id +"','" + invoice.getPaymentType().toString() +"','" + price +"','" + promocode +"','" + total_price + "','Ongoing',CURRENT_TIMESTAMP);";
+                stmt.executeQuery(sql);
             }
         } catch (Exception e) { }
         lastId=invoice_id + 1;

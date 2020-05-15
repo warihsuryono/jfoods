@@ -85,7 +85,7 @@ public class InvoiceController {
         try {
             Invoice invoice = new CashInvoice(DatabaseInvoicePostgre.getLastId()+1, foods,
                     DatabaseCustomerPostgre.getCustomerById(customerId), deliveryFee);
-            DatabaseInvoicePostgre.addInvoice(invoice);
+            DatabaseInvoicePostgre.addInvoice(invoice,"");
             return invoice;
         } catch (CustomerNotFoundException | OngoingInvoiceAlreadyExistsException e) {
             System.out.println(e.getMessage());
@@ -108,8 +108,8 @@ public class InvoiceController {
         }
         try {
             Invoice invoice = new CashlessInvoice(DatabaseInvoicePostgre.getLastId()+1, foods,
-                    DatabaseCustomerPostgre.getCustomerById(customerId), DatabasePromo.getPromoByCode(promoCode));
-            DatabaseInvoicePostgre.addInvoice(invoice);
+                    DatabaseCustomerPostgre.getCustomerById(customerId), DatabasePromoPostgre.getPromoByCode(promoCode));
+            DatabaseInvoicePostgre.addInvoice(invoice,promoCode);
             return invoice;
         } catch (CustomerNotFoundException | OngoingInvoiceAlreadyExistsException e) {
             System.out.println(e.getMessage());
