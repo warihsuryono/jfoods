@@ -13,7 +13,7 @@ public class PromoController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ArrayList<Promo> getAllPromo() {
         ArrayList<Promo> promos = new ArrayList<>();
-        promos = DatabasePromo.getPromoDatabase();
+        promos = DatabasePromoPostgre.getPromoDatabase();
         return promos;
     }
 
@@ -21,7 +21,7 @@ public class PromoController {
     public Promo getPromoByCode(@PathVariable String code)
     {
         Promo promos = null;
-        promos = DatabasePromo.getPromoByCode(code);
+        promos = DatabasePromoPostgre.getPromoByCode(code);
         return promos;
     }
 
@@ -32,8 +32,8 @@ public class PromoController {
                             @RequestParam(value = "status") Boolean active)
     {
         try {
-            Promo promos = new Promo(DatabasePromo.getLastId() + 1, code, discount, minPrice, active);
-            if (DatabasePromo.addPromo(promos)) {
+            Promo promos = new Promo(DatabasePromoPostgre.getLastId() + 1, code, discount, minPrice, active);
+            if (DatabasePromoPostgre.addPromo(promos)) {
                 return promos;
             }
         }

@@ -22,6 +22,12 @@ public class JFood
       catch (SellerNotFoundException e){
          System.out.println(e.getMessage());
       }
+      try {
+         DatabasePromoPostgre.addPromo(new Promo(DatabasePromoPostgre.getLastId() + 1, "1234", 5000, 20000, true));
+      }
+      catch (Exception e){
+         System.out.println(e.getMessage());
+      }
       SpringApplication.run(JFood.class, args);
    }
 

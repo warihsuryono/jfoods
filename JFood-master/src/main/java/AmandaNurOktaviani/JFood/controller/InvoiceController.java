@@ -13,7 +13,7 @@ public class InvoiceController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ArrayList<Invoice> getAllInvoice() {
         ArrayList<Invoice> invoices = new ArrayList<>();
-        invoices = DatabaseInvoice.getInvoiceDatabase();
+        invoices = DatabaseInvoicePostgre.getInvoiceDatabase();
         return invoices;
     }
 
@@ -21,7 +21,7 @@ public class InvoiceController {
     public Invoice getInvoiceById(@PathVariable int id) {
         Invoice invoices = null;
         try {
-            invoices = DatabaseInvoice.getInvoiceById(id);
+            invoices = DatabaseInvoicePostgre.getInvoiceById(id);
         } catch (InvoiceNotFoundException e) {
             e.getMessage();
             return null;
@@ -33,7 +33,7 @@ public class InvoiceController {
     public ArrayList<Invoice> getInvoiceByCustomer(@PathVariable int customerId) {
         ArrayList<Invoice> invoices = new ArrayList<>();
         try {
-            invoices = DatabaseInvoice.getInvoiceByCustomer(customerId);
+            invoices = DatabaseInvoicePostgre.getInvoiceByCustomer(customerId);
         } catch (CustomerNotFoundException e) {
             e.getMessage();
         }
@@ -46,7 +46,7 @@ public class InvoiceController {
     {
         Invoice invoice= null;
         if (invoice.getId() == id && invoice.getInvoiceStatus() == InvoiceStatus.Ongoing) {
-            DatabaseInvoice.changeInvoiceStatus(id, status);
+            DatabaseInvoicePostgre.changeInvoiceStatus(id, status);
             return invoice;
         }
         return null;
@@ -58,8 +58,8 @@ public class InvoiceController {
         Invoice invoice = null;
         try
         {
-            invoice = DatabaseInvoice.getInvoiceById(id);
-            DatabaseInvoice.removeInvoice(id);
+            invoice = DatabaseInvoicePostgre.getInvoiceById(id);
+            DatabaseInvoicePostgre.removeInvoice(id);
         }
         catch(InvoiceNotFoundException i)
         {
@@ -77,15 +77,15 @@ public class InvoiceController {
         ArrayList<Food> foods = new ArrayList<>();
         for (int food : foodIdList) {
             try {
-                foods.add(DatabaseFood.getFoodById(food));
+                foods.add(DatabaseFoodPostgre.getFoodById(food));
             } catch (FoodNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         }
         try {
-            Invoice invoice = new CashInvoice(DatabaseInvoice.getLastId()+1, foods,
-                    DatabaseCustomer.getCustomerById(customerId), deliveryFee);
-            DatabaseInvoice.addInvoice(invoice);
+            Invoice invoice = new CashInvoice(DatabaseInvoicePostgre.getLastId()+1, foods,
+                    DatabaseCustomerPostgre.getCustomerById(customerId), deliveryFee);
+            DatabaseInvoicePostgre.addInvoice(invoice);
             return invoice;
         } catch (CustomerNotFoundException | OngoingInvoiceAlreadyExistsException e) {
             System.out.println(e.getMessage());
@@ -101,15 +101,15 @@ public class InvoiceController {
         ArrayList<Food> foods = new ArrayList<>();
         for (int food : foodIdList) {
             try {
-                foods.add(DatabaseFood.getFoodById(food));
+                foods.add(DatabaseFoodPostgre.getFoodById(food));
             } catch (FoodNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         }
         try {
-            Invoice invoice = new CashlessInvoice(DatabaseInvoice.getLastId()+1, foods,
-                    DatabaseCustomer.getCustomerById(customerId), DatabasePromo.getPromoByCode(promoCode));
-            DatabaseInvoice.addInvoice(invoice);
+            Invoice invoice = new CashlessInvoice(DatabaseInvoicePostgre.getLastId()+1, foods,
+                    DatabaseCustomerPostgre.getCustomerById(customerId), DatabasePromo.getPromoByCode(promoCode));
+            DatabaseInvoicePostgre.addInvoice(invoice);
             return invoice;
         } catch (CustomerNotFoundException | OngoingInvoiceAlreadyExistsException e) {
             System.out.println(e.getMessage());

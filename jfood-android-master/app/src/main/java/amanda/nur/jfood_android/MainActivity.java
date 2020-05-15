@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle b = intent.getExtras();
         if(b!=null) currentUserId = (int) b.get("customerId");
 
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        expListView = findViewById(R.id.lvExp);
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                 @Override
                 public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {

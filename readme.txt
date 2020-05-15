@@ -1,3 +1,12 @@
+#2020-05-16###################################################################################################################
+tugas 1: d,e,f,g,h,i,j & tugas 2f DONE
+file baru :
+	JFood-master/src/main/java/AmandaNurOktaviani/JFood/DatabaseInvoicePostgre.java
+	JFood-master/src/main/java/AmandaNurOktaviani/JFood/DatabasePromoPostgre.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/BuatPesananRequest.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/CheckPromoRequest.java
+next tugas 3
+
 #2020-05-15###################################################################################################################
 Tugas 2: Ubah LoginActivity&MainActivity (point a,b,c,d,e DONE!)
 semua sudah menggunakan postgre
