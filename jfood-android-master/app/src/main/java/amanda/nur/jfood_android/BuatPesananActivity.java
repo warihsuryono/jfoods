@@ -147,7 +147,9 @@ public class BuatPesananActivity extends AppCompatActivity {
                             if( jsonObject != null){
                                 JSONObject promo = jsonObject;
                                 Toast.makeText(BuatPesananActivity.this,"Pesanan berhasil ditambahkan", Toast.LENGTH_LONG).show();
-
+                                Intent intent = new Intent(BuatPesananActivity.this,MainActivity.class);
+                                intent.putExtra("customerId", currentUserId);
+                                startActivity(intent);
                             }
                         }
                         catch (JSONException e)

@@ -1,5 +1,6 @@
 package AmandaNurOktaviani.JFood;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -134,16 +135,21 @@ public class DatabaseInvoicePostgre {
         int invoice_id = 0;
         int customer_id = 0;
         int food_id = 0;
+        int total_price = 0;
+        String invoiceStatus = "";
         try {
             stmt = conn.createStatement();
             ResultSet invoices = stmt.executeQuery("SELECT * FROM invoices WHERE customer_id='" + customerId + "' order by invoice_id");
             while(invoices.next()) {
                 invoice_id = invoices.getInt("invoice_id");
                 customer_id = invoices.getInt("customer_id");
+                invoiceStatus = invoices.getString("status");
                 food_id = invoices.getInt("food_id");
+                total_price += invoices.getInt("total_price");
                 if(current_invoice_id != invoice_id){
                     if(current_invoice_id != 0){
                         Customer customer = DatabaseCustomerPostgre.getCustomerById(customer_id);
+                        int finalTotal_price = total_price;
                         Invoice invoice = new Invoice(invoice_id, foods, customer) {
                             @Override
                             public PaymentType getPaymentType() {
@@ -151,8 +157,9 @@ public class DatabaseInvoicePostgre {
                             }
 
                             @Override
-                            public void setTotalPrice() {
-
+                            public void setTotalPrice()
+                            {
+                                super.totalPrice= finalTotal_price;
                             }
 
                             @Override
@@ -165,7 +172,10 @@ public class DatabaseInvoicePostgre {
 
                             }
                         };
+                        invoice.setTotalPrice();
+                        invoice.setInvoiceStatus(InvoiceStatus.valueOf(invoiceStatus));
                         list.add(invoice);
+                        total_price = 0;
                     }
                     foods.clear();
                     current_invoice_id = invoice_id;
@@ -174,6 +184,7 @@ public class DatabaseInvoicePostgre {
                 foods.add(food);
             }
             Customer customer = DatabaseCustomerPostgre.getCustomerById(customer_id);
+            int finalTotal_price = total_price;
             Invoice invoice = new Invoice(invoice_id, foods, customer) {
                 @Override
                 public PaymentType getPaymentType() {
@@ -181,8 +192,9 @@ public class DatabaseInvoicePostgre {
                 }
 
                 @Override
-                public void setTotalPrice() {
-
+                public void setTotalPrice()
+                {
+                    super.totalPrice= finalTotal_price;
                 }
 
                 @Override
@@ -195,6 +207,8 @@ public class DatabaseInvoicePostgre {
 
                 }
             };
+            invoice.setTotalPrice();
+            invoice.setInvoiceStatus(InvoiceStatus.valueOf(invoiceStatus));
             list.add(invoice);
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,11 +262,10 @@ public class DatabaseInvoicePostgre {
     public static boolean changeInvoiceStatus(int id, InvoiceStatus invoiceStatus)
     {
         try {
-            stmt = conn.createStatement();
-            stmt.executeQuery("UPDATE invoices SET status = '" + invoiceStatus.toString() + "' WHERE invoice_id='" + id + "'");
+            PreparedStatement preparedStmt = conn.prepareStatement("UPDATE invoices SET status = '" + invoiceStatus.toString() + "' WHERE invoice_id='" + id + "'");
+            preparedStmt.executeUpdate();
             return true;
-        } catch (Exception e) { }
-        return false;
+        } catch (Exception e) { return false; }
     }
 
     public static boolean removeInvoice(int id) throws InvoiceNotFoundException

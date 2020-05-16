@@ -40,16 +40,15 @@ public class InvoiceController {
         return invoices;
     }
 
-    @RequestMapping(value = "/invoiceStatus/{id}", method = RequestMethod.PUT)
-    public Invoice changeInvoiceStatus(@RequestParam(value = "ID") int id,
+    @RequestMapping(value = "/invoiceStatus", method = RequestMethod.POST)
+    public Boolean changeInvoiceStatus(@RequestParam(value = "ID") int id,
                                        @RequestParam(value = "Invoice") InvoiceStatus status)
     {
-        Invoice invoice= null;
-        if (invoice.getId() == id && invoice.getInvoiceStatus() == InvoiceStatus.Ongoing) {
-            DatabaseInvoicePostgre.changeInvoiceStatus(id, status);
-            return invoice;
-        }
-        return null;
+//        if (invoice.getId() == id && invoice.getInvoiceStatus() == InvoiceStatus.Ongoing) {
+        return DatabaseInvoicePostgre.changeInvoiceStatus(id, status);
+//            return invoice;
+//        }
+//        return null;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

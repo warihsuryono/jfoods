@@ -1,3 +1,14 @@
+#2020-05-17###################################################################################################################
+Semua tugas dari file Tutam_9_OOP_2019-2020_rev sudah Done semua, coba cek sapa tau ada yang terlewat??
+file baru :
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/OrdersAdapter.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/PesananBatalRequest.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/PesananFetchRequest.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/PesananSelesaiRequest.java
+	jfood-android-master/app/src/main/java/amanda/nur/jfood_android/SelesaiPesananActivty.java
+	jfood-android-master/app/src/main/res/layout/activity_invoice.xml
+	
+next riwayat pembelian,view keranjang, penggunaan threading, pencarian
 #2020-05-16###################################################################################################################
 tugas 1: d,e,f,g,h,i,j & tugas 2f DONE
 file baru :

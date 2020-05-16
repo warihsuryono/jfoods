@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,6 +24,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
+    Button pesanan;
     int currentUserId;
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
@@ -51,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
                 }
         });
 
+        pesanan = findViewById(R.id.pesanan);
+        pesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,SelesaiPesananActivty.class);
+                intent.putExtra("customerId", currentUserId);
+                startActivity(intent);
+            }
+        });
         refreshList();
     }
 
