@@ -14,8 +14,11 @@ def add_rak(nama):
 def add_buku(namaRak,namaBuku,pengarang,tahun,penerbit,genre):
     if(namaBuku in dataBuku):
         return "Buku dengan nama [" + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + "] sudah ada di dalam sistem"
+    elif(namaRak not in dataRak): 
+        return "Rak dengan nama " + namaRak + " belum terdaftar di dalam sistem"
     else: 
-        dataBuku.append(nama)
+        dataBuku.append([namaBuku,pengarang,tahun,penerbit,genre])
+        dataLokasiBuku.append([namaBuku,namaRak])
         return "Buku dengan nama [" + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + "] berhasil ditambahkan"
 
 
@@ -33,14 +36,29 @@ while command[0].upper() != "EXIT":
             except Exception as e: 
                 errormessage = "Nama rak tidak boleh kosong!"
             
-        if(command[1].upper() == "BUKU"):
+        elif(command[1].upper() == "BUKU"):
             errormessage = ""
             try:
-                print(add_buku(command[2],command[2],command[2]));
+                print(add_buku(command[2],command[3],command[4],command[5],command[6],command[7]));
             except Exception as e: 
-                errormessage = "Nama rak tidak boleh kosong!"
+                errormessage = "Perintah ADD BUKU : ADD BUKU [Nama Rak] [Nama Buku] [Pengarang buku] [Tahun Terbit] [Penerbit] [Genre]!"
+                
+    elif(command[0] == "dataRak"):
+        print(dataRak)
+        
+    elif(command[0] == "dataBuku"):
+        print(dataBuku)
+        
+    elif(command[0] == "dataLokasiBuku"):
+        print(dataLokasiBuku)
+                
+    else:
+        errormessage = "Perintah tidak dikenal"
     
     if(command[0].upper() == "EXIT"):
         errormessage = ""
+    
+    if(errormessage != ""):
+        print(errormessage)
         
-    print(errormessage)
+    print("");
