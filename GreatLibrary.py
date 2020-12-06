@@ -41,12 +41,20 @@ def move_buku(namaBuku,namaRakBaru):
 def search_buku(namaBuku,index = 0):
     if(index < len(dataBuku)):
         if(namaBuku == dataBuku[index][0]):
-            return index
+            print("Buku ditemukan")
+            print("Nama Buku : " + dataBuku[index][0])
+            print("Posisi : " + dataLokasiBuku[index][1])
+            print("Pengarang : " + dataBuku[index][1])
+            print("Tahun terbit :" + dataBuku[index][2])
+            print("Penerbit : " + dataBuku[index][3])
+            print("Genre : " + dataBuku[index][4])
+            return 1
     else:
+        print("Buku dengan nama " + command[1] + " tidak ditemukan")
         return -1
         
     index = index + 1
-    search_buku(namaBuku,index)
+    search_buku(namaBuku,index) #Recursive!!!
         
 def bukuAda(namaBuku):
     countBuku = len(dataBuku)
@@ -62,6 +70,12 @@ def bukuAda(namaBuku):
             return False
         except Exception as e:
             return False
+            
+add_rak("001")
+add_rak("002")
+add_buku("001","namaBuku01","pengarang01","2020","penerbit01","fiksi")
+add_buku("002","namaBuku02","pengarang02","2019","penerbit02","novel")
+
             
 command = [""]
 while command[0].upper() != "EXIT":
@@ -97,22 +111,8 @@ while command[0].upper() != "EXIT":
     elif(command[0].upper() == "SEARCH"):
         errormessage = ""
         try:
-            indexBuku = search_buku(command[1])
-            try:
-                if(indexBuku > -1):
-                    print("Buku ditemukan")
-                    print("Nama Buku : " + dataBuku[indexBuku][0])
-                    print("Posisi : " + dataLokasiBuku[indexBuku][1])
-                    print("Pengarang : " + dataBuku[indexBuku][1])
-                    print("Tahun terbit :" + dataBuku[indexBuku][2])
-                    print("Penerbit : " + dataBuku[indexBuku][3])
-                    print("Genre : " + dataBuku[indexBuku][4])
-                else:
-                    errormessage = "Buku dengan nama " + command[1] + " tidak ditemukan"
-            except Exception as e:
-                errormessage = "Buku dengan nama " + command[1] + " tidak ditemukan"
+            search_buku(command[1])
         except Exception as e:
-            print(e)
             errormessage = "Perintah SEARCH : SEARCH [Nama buku]"
                 
     elif(command[0] == "dataRak"):
