@@ -13,13 +13,13 @@ def add_rak(nama):
 
 def add_buku(namaRak,namaBuku,pengarang,tahun,penerbit,genre):
     if(bukuAda(namaBuku)):
-        return "Buku dengan nama [" + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + "] sudah ada di dalam sistem"
+        return "Buku dengan nama " + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + " sudah ada di dalam sistem"
     elif(namaRak not in dataRak): 
         return "Rak dengan nama " + namaRak + " belum terdaftar di dalam sistem"
     else: 
         dataBuku.append([namaBuku,pengarang,tahun,penerbit,genre])
         dataLokasiBuku.append([namaBuku,namaRak])
-        return "Buku dengan nama [" + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + "] berhasil ditambahkan"
+        return "Buku dengan nama " + namaBuku + ", " + tahun + ", " + penerbit + ", " + genre + " berhasil ditambahkan"
         
 def move_buku(namaBuku,namaRakBaru):
     if(bukuAda(namaBuku) and namaRakBaru in dataRak):
@@ -30,13 +30,13 @@ def move_buku(namaBuku,namaRakBaru):
                 if(namaBuku == dataLokasiBuku[i][0]):
                     namaRakLama = dataLokasiBuku[i][1]
                     dataLokasiBuku[i][1] = namaRakBaru
-                    return "Buku dengan nama [" + namaBuku + "] dipindahkan dari rak dengan nama [" + namaRakLama + "] ke rak dengan nama [" + namaRakBaru + "]"
+                    return "Buku dengan nama " + namaBuku + " dipindahkan dari rak dengan nama " + namaRakLama + " ke rak dengan nama " + namaRakBaru + ""
                 i = i + 1
         except Exception as e:
             return "Pemindahan Buku ada kesalahan, silakan ulangi lagi!"
         
     else:
-        return "Buku dengan nama [" + namaBuku + "] dan/atau Rak [" + namaRakBaru + "] tidak ditemukan"
+        return "Buku dengan nama " + namaBuku + " dan/atau Rak " + namaRakBaru + " tidak ditemukan"
     
         
 def bukuAda(namaBuku):
