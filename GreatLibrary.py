@@ -79,7 +79,7 @@ while command[0].upper() != "EXIT":
                 errormessage = "Perintah ADD BUKU : ADD BUKU [Nama Rak] [Nama Buku] [Pengarang buku] [Tahun Terbit] [Penerbit] [Genre]"
 
 
-    if(command[0].upper() == "MOVE"):
+    elif(command[0].upper() == "MOVE"):
         if(command[1].upper() == "BUKU"):
             errormessage = ""
             try:
@@ -89,16 +89,19 @@ while command[0].upper() != "EXIT":
         
                 
     elif(command[0] == "dataRak"):
+        errormessage = ""
         print(dataRak)
         
     elif(command[0] == "dataBuku"):
+        errormessage = ""
         print(dataBuku)
         
     elif(command[0] == "dataLokasiBuku"):
+        errormessage = ""
         print(dataLokasiBuku)
                 
     else:
-        errormessage = "Perintah tidak dikenal"
+        errormessage = "Perintah tidak dikenal!"
     
     if(command[0].upper() == "EXIT"):
         errormessage = ""
